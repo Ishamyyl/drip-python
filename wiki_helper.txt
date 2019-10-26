@@ -1,0 +1,39 @@
+\s*(.+)\{(.+)\} -- (.+) \(default: \{(.+)\}\)
+$1 | `$2` | $3 | `$4`
+
+
+
+Call Parameters
+
+
+
+## `()`
+
+
+
+Arguments
+
+arg | type | description
+--- | --- | ---
+
+Other Keyword Arguments
+
+kwarg | type | description | default
+--- | --- | --- | ---
+marshall  | `bool` | Unpack the Response object | `True`
+
+Returns
+
+type | description
+--- | ---
+Response or "JSON" | API Response, or the unpacked list of Campaign objects
+
+***
+
+
+email | `str` | Person's email address, id, or visitor_uuid
+
+
+type | description
+--- | ---
+Response or Boolean | API Response, or True/False if the call returned a success response or not.

@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - c2-pip-{{ .Branch }}-{{ checksum "poetry.lock" }}
+
+      - run:
+          name: install dependencies
+          command: |
+            sudo pip install poetry
+            poetry config settings.virtualenvs.in-project true
+            poetry install
+
+      - save_cache:
+          paths:
+            - "./.venv"
+          key: c2-pip-{{ .Branch }}-{{ checksum "poetry.lock" }}
+
+      - run:
+          name: run tests
+          command: |
+            poetry run pytest --junitxml=test-results/pytest/results.xml tests
+
+      - store_test_results:
+          path: test-results
+          destination: test-results

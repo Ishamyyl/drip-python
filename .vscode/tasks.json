@@ -1,0 +1,142 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "coveralls",
+            "type": "shell",
+            "command": "pipenv",
+            "args": [
+                "run",
+                "coveralls"
+            ],
+            "group": "test",
+            "presentation": {
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "rm",
+            "args": [
+                "-rf",
+                "./dist",
+                "./build",
+                "./drip_python.egg-info"
+            ],
+            "group": "build",
+            "presentation": {
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        // {
+        //     "label": "build",
+        //     "dependsOn": [
+        //         "clean"
+        //     ],
+        //     "type": "shell",
+        //     "command": "poetry",
+        //     "args": [
+        //         "build"
+        //     ],
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     },
+        //     "presentation": {
+        //         "panel": "dedicated",
+        //         "showReuseMessage": false
+        //     },
+        //     "problemMatcher": []
+        // },
+        // {
+        //     "label": "publish",
+        //     "dependsOn": [
+        //         "clean"
+        //     ],
+        //     "type": "shell",
+        //     "command": "poetry",
+        //     "args": [
+        //         "publish",
+        //         "--build"
+        //     ],
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     },
+        //     "presentation": {
+        //         "panel": "dedicated",
+        //         "showReuseMessage": false
+        //     },
+        //     "problemMatcher": []
+        // },
+        {
+            "label": "upload:twine",
+            "dependsOn": [
+                "build"
+            ],
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "-m",
+                "twine",
+                "upload",
+                "-u",
+                "${input:twine_username}",
+                "-p",
+                "${input:twine_password}",
+                "--disable-progress-bar",
+                "dist/*"
+            ],
+            "group": "build",
+            "presentation": {
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "upload testpypi",
+            "dependsOn": [
+                "build"
+            ],
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "-m",
+                "twine",
+                "upload",
+                "--repository-url",
+                "https://test.pypi.org/legacy/",
+                "-u",
+                "${input:twine_username}",
+                "-p",
+                "${input:twine_password}",
+                "--disable-progress-bar",
+                "dist/*"
+            ],
+            "group": "build",
+            "presentation": {
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "twine_username",
+            "type": "promptString",
+            "description": "Twine Username"
+        },
+        {
+            "id": "twine_password",
+            "type": "promptString",
+            "description": "Twine Password"
+        }
+    ]
+}
