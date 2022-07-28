@@ -99,6 +99,7 @@ Anyway, the default case will be what you want most of the time, so don't worry 
 # FAQ
 
 # Status - v0.3.0 Beta
+# :warning: No longer maintained
 While devotedly and enthusiastically maintained, this is an un-official side-project and Drip Support is unable to fix issues you run into. Create an Issue on GitHub here instead. Thanks!
 
 Purpose
